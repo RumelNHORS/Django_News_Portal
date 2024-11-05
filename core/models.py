@@ -59,7 +59,13 @@ class SiteSettings(models.Model):
 
 class MainCategory(models.Model):
     title = models.CharField(max_length=200, blank=True, unique=True)
-    slug = AutoSlugField(populate_from=title, editable=True, unique=True, unique_with=['created__month', 'status'])
+    # slug = AutoSlugField(populate_from=title, editable=True, unique=True, unique_with=['created__month', 'status'])
+    slug = AutoSlugField(
+        populate_from='title',
+        editable=True,
+        unique=True,
+        unique_with=['created_at__month', 'status']
+    )
     description = HTMLField(blank=True, null=True)
     image = models.ImageField(upload_to='category_images/', null=True, blank=True)
     featured = models.BooleanField(help_text='Select this content for main menu', default=False)
